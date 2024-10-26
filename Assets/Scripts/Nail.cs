@@ -1,78 +1,41 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Nail : MonoBehaviour
 {
-    private SpriteMask _mask;
-    private SpriteRenderer _renderer;
-    private Sprite _sprite;
-    private Texture2D _paintTexture;
+    public SpriteRenderer SpriteRenderer;
 
-    private Color[] _texturePixels;
-    
-    private static readonly int MainTex = Shader.PropertyToID("_CustomTex");
-    private Camera _cam;
+    public Sprite BlueNail;
+    public Sprite BlackNail;
+    public Sprite PinkNail;
 
-    public void Init(Camera cam)
+    private Dictionary<PolishColor, Sprite> _nailSprites;
+
+    public void Init()
     {
-        _cam = cam;
-        _mask = GetComponent<SpriteMask>();
-        _renderer = GetComponentInChildren<SpriteRenderer>();
-        _sprite = _renderer.sprite;
-        var maskSprite = _mask.sprite; // size from mask, bc mask has the correct size !
-        // TODO tady potencial na improvement - texture format less bits
-        _paintTexture = new Texture2D(maskSprite.texture.width, maskSprite.texture.height, TextureFormat.RGBAFloat, true)
+        SpriteRenderer.color = Color.clear;
+
+        _nailSprites = new Dictionary<PolishColor, Sprite>()
         {
-            filterMode = FilterMode.Bilinear,
+            { PolishColor.Blue, BlueNail },
+            { PolishColor.Black, BlackNail },
+            { PolishColor.Pink, PinkNail }
         };
-        _texturePixels = new Color[_paintTexture.width * _paintTexture.height];
-    }
-
-    public void Paint(Vector2 pos, int brushSize, Color color)
-    {
-        var startX = (int)Mathf.Max(pos.x * _paintTexture.width - brushSize, 0);
-        var startY = (int)Mathf.Max(pos.y * _paintTexture.height - brushSize, 0);
-        var endX = (int)Mathf.Min(pos.x * _paintTexture.width + brushSize, _paintTexture.width);
-        var endY = (int)Mathf.Min(pos.y * _paintTexture.height + brushSize, _paintTexture.height);
-        //Debug.Log("pos = " + pos + ", startX = " + startX + ", startY = " + startY + ", endX = " + endX + ", endY = " + endY);
-        for (var i = startX; i < endX; i++)
-        {
-            for (var j = startY; j < endY; j++)
-            {
-                // TODO
-                _texturePixels[_paintTexture.width * i + j] = color;
-            }
-        }
     }
     
-    private Vector2 GetSpritePos(Vector2 inputPos)
+    public bool IsInside(Vector2 pos)
     {
-        var worldPos = _cam.ScreenToWorldPoint(inputPos);
-        var objPoint = transform.InverseTransformPoint(worldPos);
-        objPoint += _sprite.bounds.extents;
-        objPoint.x /= _sprite.bounds.size.x;
-        objPoint.y /= _sprite.bounds.size.y;
-        return objPoint;
+        return SpriteRenderer.bounds.Contains(pos);
     }
 
-    private bool IsSpritePosOnSprite(Vector2 pos)
+    public void SetColor(PolishColor polishColor)
     {
-        return pos.x >= 0 && pos.y >= 0 && pos.x <= 1 && pos.y <= 1;  // TODO factor in brush size
+        SpriteRenderer.color = Color.white;
+        SpriteRenderer.sprite = _nailSprites[polishColor];
     }
 
-    public bool InputOnSprite(Vector2 inputPos, out Vector2 pos)
+    private void Reset()
     {
-        pos = GetSpritePos(inputPos);
-        return IsSpritePosOnSprite(pos);
-    }
-    
-    public void SaveTexture()
-    {
-        Debug.Log("saving tex");
-        _paintTexture.SetPixels(_texturePixels);
-        _paintTexture.Apply(false);
-        _renderer.material.SetTexture(MainTex, _paintTexture);
-        
+        SpriteRenderer = GetComponent<SpriteRenderer>();
     }
 }

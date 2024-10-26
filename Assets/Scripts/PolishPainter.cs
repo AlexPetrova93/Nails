@@ -9,7 +9,7 @@ public class PolishPainter : MonoBehaviour
     
     public Transform BrushParent;
 
-    public Nail[] Nails;
+    public NailOld[] Nails;
     
     private Camera _camera;
     

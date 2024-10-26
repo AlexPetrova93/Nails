@@ -42,6 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Nail
+    uniqueID: 3130071291
+    locked: 0
   - name: Brush
     uniqueID: 88342497
+    locked: 0
+  - name: Polish
+    uniqueID: 2821807709
     locked: 0
