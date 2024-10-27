@@ -17,7 +17,7 @@ public class NailPolish : MonoBehaviour
     
     public bool IsInside(Vector2 pos)
     {
-        return SpriteRenderer.bounds.Contains(pos) || PolishCap.SpriteRenderer.bounds.Contains(pos);
+        return PolishCap.Selectable && (SpriteRenderer.bounds.Contains(pos) || PolishCap.SpriteRenderer.bounds.Contains(pos));
     }
 
     public void Select() => PolishCap.Select();

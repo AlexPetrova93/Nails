@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public SpeechManager SpeechManager;
 
     public PauseMenu PauseMenu;
+    public CanvasGroup IntroPanel;
     
     private NailPolish _lastSelected;
     private int _lastSpeech;
@@ -17,8 +18,6 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
-        // TODO add intro warning
-
         SpeechManager.Init();
         
         foreach (var nailPolish in Polishes)
@@ -32,7 +31,11 @@ public class GameManager : MonoBehaviour
         }
         
         PauseMenu.OnClickedOutside.AddListener(UnpauseGame);
-        
+    }
+
+    public void StartGame()
+    {
+        IntroPanel.Hide();
         _gameRunning = true;
     }
 
@@ -81,7 +84,7 @@ public class GameManager : MonoBehaviour
             }
 
             if (_lastSelected == null) return;
-            
+
             foreach (var nail in Nails)
             {
                 if (nail.IsInside(worldPos))
@@ -90,6 +93,7 @@ public class GameManager : MonoBehaviour
                     ++_lastSpeech;
                     _lastSpeech %= 3;
                     nail.SetColor(_lastSelected.PolishColor);
+                    _lastSelected.PolishCap.PaintNail(nail);
                     return;
                 }
             }

@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Nail : MonoBehaviour
 {
+    public Transform StartPos;
+    public Transform EndPos;
+    
     public SpriteRenderer SpriteRenderer;
 
     public Sprite BlueNail;
