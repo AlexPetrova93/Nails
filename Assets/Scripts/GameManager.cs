@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,10 +7,20 @@ public class GameManager : MonoBehaviour
     public NailPolish[] Polishes;
     public Nail[] Nails;
 
+    public SpeechManager SpeechManager;
+
+    public PauseMenu PauseMenu;
+    
     private NailPolish _lastSelected;
+    private int _lastSpeech;
+    private bool _gameRunning;
     
     private void Start()
     {
+        // TODO add intro warning
+
+        SpeechManager.Init();
+        
         foreach (var nailPolish in Polishes)
         {
             nailPolish.Init();
@@ -20,10 +30,28 @@ public class GameManager : MonoBehaviour
         {
             nail.Init();
         }
+        
+        PauseMenu.OnClickedOutside.AddListener(UnpauseGame);
+        
+        _gameRunning = true;
+    }
+
+    public void PauseGame()
+    {
+        PauseMenu.Show();
+        _gameRunning = false;
+    }
+    
+    public void UnpauseGame()
+    {
+        PauseMenu.Hide();
+        _gameRunning = true;
     }
 
     private void Update()
     {
+        if (!_gameRunning) return;
+        
         var input = Utility.GetInput();
 
         // TODO better input detect?
@@ -58,6 +86,9 @@ public class GameManager : MonoBehaviour
             {
                 if (nail.IsInside(worldPos))
                 {
+                    SpeechManager.RunLine((SpeechType)_lastSpeech);
+                    ++_lastSpeech;
+                    _lastSpeech %= 3;
                     nail.SetColor(_lastSelected.PolishColor);
                     return;
                 }
@@ -70,5 +101,11 @@ public class GameManager : MonoBehaviour
         Camera = Camera.main;
         Nails = FindObjectsOfType<Nail>();
         Polishes = FindObjectsOfType<NailPolish>();
+        SpeechManager = FindObjectOfType<SpeechManager>();
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
