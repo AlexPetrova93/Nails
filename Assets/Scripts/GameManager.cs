@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public SoundManager SoundManager;
     public Camera Camera;
     public NailPolish[] Polishes;
     public Nail[] Nails;
@@ -18,7 +19,9 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
+        SoundManager.Init();
         SpeechManager.Init();
+        SoundManager.PlayMusic(AudioRef.Music);
         
         foreach (var nailPolish in Polishes)
         {
@@ -67,10 +70,15 @@ public class GameManager : MonoBehaviour
             {
                 if (nailPolish.IsInside(worldPos))
                 {
-                    if (_lastSelected != null) _lastSelected.Deselect();
+                    if (_lastSelected != null)
+                    {
+                        SoundManager.PlaySound(AudioRef.CloseCap);
+                        _lastSelected.Deselect();
+                    }
 
                     if (_lastSelected != nailPolish)
                     {
+                        SoundManager.PlaySound(AudioRef.OpenCap);
                         nailPolish.Select();
                         _lastSelected = nailPolish;
                     }
@@ -89,6 +97,7 @@ public class GameManager : MonoBehaviour
             {
                 if (nail.IsInside(worldPos))
                 {
+                    if ((SpeechType)_lastSpeech == SpeechType.Negative) SoundManager.PlaySound(AudioRef.Discomfort);
                     SpeechManager.RunLine((SpeechType)_lastSpeech);
                     ++_lastSpeech;
                     _lastSpeech %= 3;
