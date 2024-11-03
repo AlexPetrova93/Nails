@@ -46,7 +46,7 @@ public class SoundManager : MonoBehaviour
     {
         foreach (var musicItem in MusicItems)
         {
-            _musicClips.Add(musicItem.AudioRef, CreateAudioSource(musicItem));
+            _musicClips.Add(musicItem.AudioRef, CreateAudioSource(musicItem, true));
         }
         foreach (var sfxItem in SfxItems)
         {
@@ -77,7 +77,7 @@ public class SoundManager : MonoBehaviour
         return ret;
     }
 
-    private AudioSource CreateAudioSource(AudioItem audioItem)
+    private AudioSource CreateAudioSource(AudioItem audioItem, bool loop)
     {
         var go = new GameObject(audioItem.AudioRef.ToString());
         go.transform.SetParent(transform);
@@ -85,6 +85,7 @@ public class SoundManager : MonoBehaviour
         var src = go.AddComponent<AudioSource>();
         src.clip = audioItem.AudioClip;
         src.playOnAwake = false;
+        src.loop = loop;
         return src;
     }
     
@@ -94,7 +95,7 @@ public class SoundManager : MonoBehaviour
         bufSrc.Sources = new AudioSource[bufferLen];
         for (var i = 0; i < bufSrc.Sources.Length; i++)
         {
-            bufSrc.Sources[i] = CreateAudioSource(audioItem);
+            bufSrc.Sources[i] = CreateAudioSource(audioItem, false);
         }
         
         return bufSrc;

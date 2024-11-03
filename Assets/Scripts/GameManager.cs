@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour
     private NailPolish _lastSelected;
     private int _lastSpeech;
     private bool _gameRunning;
+
+    private float _lastInputTime;
+
+    private const float InactiveTimeWindow = 120; // back to intro screen after 2 minutes inactive
     
     private void Start()
     {
@@ -32,12 +36,13 @@ public class GameManager : MonoBehaviour
         {
             nail.Init();
         }
-        
+
         PauseMenu.OnClickedOutside.AddListener(UnpauseGame);
     }
 
     public void StartGame()
     {
+        _lastInputTime = Time.time;
         IntroPanel.Hide();
         _gameRunning = true;
     }
@@ -57,12 +62,18 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (!_gameRunning) return;
+
+        if (Time.time - _lastInputTime > InactiveTimeWindow)
+        {
+            Restart();
+        }
         
         var input = Utility.GetInput();
 
-        // TODO better input detect?
+        // TODO better input detect
         if (input.Ended)
         {
+            _lastInputTime = Time.time;
             var worldPos = Camera.ScreenToWorldPoint(input.Position);
             worldPos.z = 0;
             
