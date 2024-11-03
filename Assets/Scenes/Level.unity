@@ -3138,12 +3138,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MusicItems:
   - AudioRef: 0
-    AudioClip: {fileID: 8300000, guid: 76c724ec5a99dbe4a9a48eb97b20dc16, type: 3}
+    AudioClip: {fileID: 8300000, guid: d8beab9fffddf6543a4d0577c96aa068, type: 3}
+    Volume: 0.75
   SfxItems:
   - AudioRef: 1
     AudioClip: {fileID: 8300000, guid: f4adc497b35b8214d9bf006fd4432ea5, type: 3}
+    Volume: 1
   - AudioRef: 2
     AudioClip: {fileID: 8300000, guid: 3db07aedf621ccc478de2d1357710538, type: 3}
+    Volume: 1
   SfxVariationItems:
   - AudioRef: 3
     AudioClips:
@@ -3154,6 +3157,31 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 7d29916f2088bf843bc89f1d2d40269b, type: 3}
     - {fileID: 8300000, guid: 10b53fd0e8656d74ab5f2f78dc682428, type: 3}
     - {fileID: 8300000, guid: 96f2b99162ed7df4d9e57e362ae31f82, type: 3}
+    LastIdx: 0
+  - AudioRef: 4
+    AudioClips:
+    - {fileID: 8300000, guid: d1edf338cf75e4b448ce4a434c813d64, type: 3}
+    - {fileID: 8300000, guid: 4282d5eb205c9144ea26b4bb7fd021a9, type: 3}
+    - {fileID: 8300000, guid: 1dee38090b2eda547af1d630db558c91, type: 3}
+    - {fileID: 8300000, guid: ce156fefdae87ee479e2edccbb11ba94, type: 3}
+    - {fileID: 8300000, guid: 1726ccba695e8914b811b6d977d422a6, type: 3}
+    LastIdx: 0
+  - AudioRef: 5
+    AudioClips:
+    - {fileID: 8300000, guid: 380f0a2f6eb74b4409ae7dca40598a72, type: 3}
+    - {fileID: 8300000, guid: 45dd53255dd2a45488a553edc23397b1, type: 3}
+    - {fileID: 8300000, guid: b57faa8be6dad0f4e83970d5bbe4fbdd, type: 3}
+    - {fileID: 8300000, guid: 9c3e436a76a1c564ca9ccf007e983369, type: 3}
+    - {fileID: 8300000, guid: 38ebb950a7ce0e7459d29e6a7f9082a8, type: 3}
+    LastIdx: 0
+  - AudioRef: 6
+    AudioClips:
+    - {fileID: 8300000, guid: 9127cc3750631b040829e78c13979cb0, type: 3}
+    - {fileID: 8300000, guid: 3a55bc07139b574449b8d5d79d07b7ab, type: 3}
+    - {fileID: 8300000, guid: 080ae0bf24ebc1a4886e4c9d76bcad7d, type: 3}
+    - {fileID: 8300000, guid: 35b83f805a3ba7240b74f3a7e580c1df, type: 3}
+    - {fileID: 8300000, guid: d843cb57aa78aca40bf119b1520d1dff, type: 3}
+    - {fileID: 8300000, guid: 95ae47e489aeb4e4cb390edf9b1e3cf8, type: 3}
     LastIdx: 0
 --- !u!4 &1602282663
 Transform:

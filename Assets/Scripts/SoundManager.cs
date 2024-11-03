@@ -8,7 +8,10 @@ public enum AudioRef
     Music,
     OpenCap,
     CloseCap,
-    Discomfort
+    Discomfort,
+    Negative,
+    Neutral,
+    Positive
 }
 
 [Serializable]
@@ -16,6 +19,7 @@ public struct AudioItem
 {
     public AudioRef AudioRef;
     public AudioClip AudioClip;
+    public float Volume;
 }
 
 [Serializable]
@@ -86,6 +90,7 @@ public class SoundManager : MonoBehaviour
         src.clip = audioItem.AudioClip;
         src.playOnAwake = false;
         src.loop = loop;
+        src.volume = audioItem.Volume;
         return src;
     }
     
@@ -136,7 +141,6 @@ public class SoundManager : MonoBehaviour
         src.Sources[idx].Play();
         ++idx;
         idx %= src.Sources.Length;
-        Debug.Log("idx = " + src.LastIdx);
         src.LastIdx = idx;
         if (_sfxClips.ContainsKey(audioRef)) _sfxClips[audioRef] = src;
         else _sfxVariationClips[audioRef] = src;

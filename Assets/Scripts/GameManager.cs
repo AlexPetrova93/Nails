@@ -108,7 +108,9 @@ public class GameManager : MonoBehaviour
             {
                 if (nail.IsInside(worldPos))
                 {
-                    if ((SpeechType)_lastSpeech == SpeechType.Negative) SoundManager.PlaySound(AudioRef.Discomfort);
+                    if ((SpeechType)_lastSpeech == SpeechType.Negative) SoundManager.PlaySound(AudioRef.Negative);
+                    if ((SpeechType)_lastSpeech == SpeechType.Neutral) SoundManager.PlaySound(AudioRef.Neutral);
+                    if ((SpeechType)_lastSpeech == SpeechType.Positive) SoundManager.PlaySound(AudioRef.Positive);
                     SpeechManager.RunLine((SpeechType)_lastSpeech);
                     ++_lastSpeech;
                     _lastSpeech %= 3;
